@@ -1,0 +1,10 @@
+{%for field in profile%}
+    {%if 'Country' in field%}
+        <p><b>Country: {{country_to_show}}</b></p>
+    {%else%}
+        <p><b>{{field}}<b></p>
+    {%endif%}
+{% endfor %}
+<br>
+<div><a href="{%url 'Home'%}" style='padding : 10px'> HOME </a> <a href="{%url 'update-profile'%}" style='padding : 10px'> UPDATE PROFILE </a> <a href = "{%url 'logout'%}" style='padding : 10px'>LOG-OUT</a></div>
+

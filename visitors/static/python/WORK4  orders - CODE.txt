@@ -1,0 +1,55 @@
+def getid(name):
+    cust_id = " "
+    try:
+        path = input("please type customers file: ")
+        cust_file = open(path)
+        line = cust_file.readline()
+        while len(line)>0 :
+            list1 = line.split(",")
+            if list1[1]==name:
+                cust_id = list1[0]
+                break
+            line = cust_file.readline()
+        cust_file.close()
+    except:
+        print("WRONG FILE ! TRY AGAIN !")
+        getid(name)
+    finally:
+        return cust_id;
+
+def getOrders(id1):
+    orders = []
+    try:
+        path = input("please type orders file: ")
+        orders_file = open(path)
+        line = orders_file.readline()
+        while len(line)>0 :
+            list1 = line.split(",")
+            if list1[1]==id1:
+                orders.append(list1[3])
+            line = orders_file.readline()
+        orders_file.close()
+    except:
+        print("WRONG FILE ! TRY AGAIN !")
+        getOrders(id1)
+    finally:
+        return orders
+
+def output_sum(list1):
+    result=0
+    list2 = list(map(int,list1))
+    for i in range(0,len(list2)) :
+        result = result + list2[i]
+    print("Total orders: {0}$".format(result))
+    
+
+
+name = input("please type the customer name: ")
+while name != " ":
+    id1= getid(name)
+    orders_list = getOrders(id1)
+    output_sum(orders_list)
+    name = input("please type the customer name: ")
+else:
+    exit()
+

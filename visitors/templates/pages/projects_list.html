@@ -1,0 +1,9 @@
+<html>
+    <head>
+    </head>
+<body>
+    {%for project in projects%}
+        <p><b><a href = "/advanced/{{project.code}}">{{project.code}}. {{project.desc}}</a></b></p>
+    {%endfor%}
+</body>
+</html>

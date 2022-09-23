@@ -1,0 +1,17 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+
+    <h1> SignIN </h1>
+    <form method = 'post'>
+        {% csrf_token %}
+        {{form.as_p}}
+        <button type = 'submit' name = "SignIn"> SignIN </button>
+    </form>
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        <button type="sumbit" name="SignUp">SignUp ?</button>
+    </form>
+
+{% endblock content%}

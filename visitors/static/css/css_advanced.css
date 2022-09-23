@@ -1,0 +1,39 @@
+body{
+    background-color:ghostwhite 
+}
+table{
+    border: 1px solid black;
+}
+thead th:first-child {
+    width: 100px;
+}
+thead th:nth-child(2) {
+    width: 200px;
+}
+thead tr {
+    background-color: #00CCFF;
+}
+tbody tr:nth-of-type(even) {
+    background-color: Silver;
+}
+tbody tr:nth-of-type(2n+1){
+    background-color: aquamarine;
+}
+tbody td:nth-child(-n+3) {
+    text-align: center;
+}
+tbody tr:nth-last-child(-n+2) {
+    font-style: italic;
+}
+#myCanavas{
+    animation-name : anime;
+    animation-duration: 5s;
+    animation-iteration-count : infinite;
+}
+@keyframes anime{
+    0%{left: 40px;top:40px}
+    25%{left: 80px;top:40px}
+    50%{left: 80px;top:80px}
+    75%{left: 40px;top:80px}
+    100%{left: 40px;top:40px}
+}

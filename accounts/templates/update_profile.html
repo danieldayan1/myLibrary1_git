@@ -1,0 +1,82 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<style type="text/css">
+			body{
+				background-color:#F0FFFF
+			}
+			input:focus{
+				background-color: gray;
+			}
+			input[type="password"]:focus{
+				background-color: rgb(151, 113, 113);
+			}
+		</style>
+		<meta name = "description" content = "daniel dayan website . include all of my resume and cv during the years . ">
+		<meta name= "keywords" content = "daniel", "dayan" , "python" , "html" , "cv" , "fs">
+		<meta http-equiv=”refresh” content="120">
+		<meta charset="utf-8" >
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src = "{%static 'js/js_form.js'%}" defer></script>
+	</head>
+    <body onload="timeToReset()">
+        <h1> Profile </h1>
+        <form method = 'post'>
+            {% csrf_token %}
+            {% for field in form %}
+                {%if field.name == 'age' %}
+                    {{field.name|capfirst}}:18 {{field}} 120 
+                    {%if field.value%}
+                        <span style = "padding: 20px;"><b>{{field.value}}</b>{{field.errors}}</span> 
+                    {%endif%}
+                    <br><br>
+                {%elif field.name == 'creation_date' %}
+                    Created At: <span style = "padding: 20px;"><b> {{field.value|date:"d/m/Y"}} </b>{{field.errors}}</span> <br><br>
+                {%elif field.name == 'url' %}
+                    Attachment: {{field.value}} <input type  = 'file' name = "myFile" > {{field.errors}}<br><br>  
+                {%else%}
+                    {{field.name|capfirst}}: {{field}} {{field.errors}} <br><br>
+                {%endif%}
+            {%endfor%}
+            <div><label>How often you visit this site:</label>
+                <datalist id = "frequencyList">
+                    <option value = 'visit1'>always</option>
+                    <option value = 'visit2'>very often</option>
+                    <option value = 'visit3'>sometimes</option>
+                    <option value = 'visit4'>never</option>
+                </datalist>
+                <input type = "text" list = "frequencyList">
+            </div>
+            <br>
+            <div><fieldset><legend>Job location </legend><br>
+                    <input type = "checkbox" name = "location_Darom" value = "Chafon"><label>Chafon</label><br>
+                    <input type = "checkbox" name = "location_Darom" value = "Darom"><label>Darom</label><br>
+                    <input type = "checkbox" name = "location_GushDan" value = "GushDan"><label>Gush Dan</label><br>
+                    <input type = "checkbox" name = "location_Jerusalem" value = "Jerusalem"><label>Jerusalem</label><br>
+                </fieldset>
+            </div>
+            <br>
+            <div><fieldset><legend>Job salary</legend><br>
+                    <input type = "radio" name = "salary" value = "5000"><label>5,000</label><br>
+                    <input type = "radio" name = "salary" value = "10000"><label>5,001 - 10,000</label><br>
+                    <input type = "radio" name = "salary" value = "10000+"><label>10,001 - ...</label><br>
+                </fieldset>
+            </div>
+            <br>
+            <div><fieldset><legend>Ramarks: </legend>
+                    <textarea name = "remarks" value = "remarks..." cols = "20" rows="8" >type your remarks...</textarea>
+                </fieldset>
+            </div>	
+            <br>
+            {%if errors%}
+                WRONG FIELDS :
+                {%for err in errors%}
+                    {{err}}
+                {%endfor%}
+                <br>
+            {%endif%}
+            <button type = 'submit' name="sumbit"> SUMBIT </button>
+        </form>
+	</body>
+</html> 
