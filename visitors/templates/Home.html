@@ -14,8 +14,8 @@
 				url = "{%url 'profile'%}"
 			}else{
 				switch(url_code){
-				case 1: url = "{%url 'profile'%}";break; 
-				case 2: url = "{%url 'profile'%}";break; 
+				case 1: url = "{%url 'books'%}";break; 
+				case 2: url = "{%url 'loans'%}";break; 
 				default: url = "{%url 'carusel'%}";break;
 				}
 			}
@@ -91,8 +91,8 @@
 		</div>
 	</header>
 	<hr style = "margin: 0px;">
-	<div id = "mainContent" class = "center" >	
-		<nav style="top:115px;" >	
+	<div  class = "center" >	
+		<nav >	
 			<ul>
 				<li title="press to open\close books list" onclick="openClosePage(1,'_blank')">BOOKS</li>
 				<li	title="press to open\close your loans" onclick="openClosePage(2,'_blank')">LOANS</li>

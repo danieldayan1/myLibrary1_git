@@ -41,28 +41,24 @@ def user_login(request):
     if request.user.is_authenticated:
         return redirect('Home')
     
-    if request.method == 'POST':
-        if 'SignUp' in request.POST:
-            return redirect('register')
-        else:
-            u_username = request.POST.get('username')
-            u_password = request.POST.get('password')
-
-            user = authenticate(username = u_username, password = u_password)
-
-            if user:
-                login(request, user)
-                next = request.GET.get('next', 'Home')
-                return redirect(next)
-            else:
-                context = {'form': AuthenticationForm(request.POST)}
-                messages.add_message(request, messages.WARNING, "User not authenticated!")
-                return render(request, 'login.html', context)
-
+    if 'SignUp' in request.GET:
+        return redirect('register')
     else:
-        context = {'form': AuthenticationForm}
-        return render(request, 'login.html', context)
+        u_username = request.GET.get('username')
+        u_password = request.GET.get('password')
+        user = authenticate(username = u_username, password = u_password)
 
+        if user:
+            login(request, user)
+            next = request.GET.get('next', 'Home')
+            return redirect(next)
+        else:
+            context = {'form': AuthenticationForm(request.GET)}
+            messages.add_message(request, messages.WARNING, "User not authenticated!")
+            return render(request, 'login.html', context)
+
+    context = {'form': AuthenticationForm}
+    return render(request, 'login.html', context)
 
 def user_logout(request):
     logout(request)

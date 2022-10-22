@@ -1,0 +1,11 @@
+{%extends 'partials/base.html'%}
+{%load static%}
+{%block content%}
+<head></head>
+<body>
+<h1>LOAN DETAILS : </h1>
+{{loan}}
+<br><br><br>
+<a href="{%url 'loans'%}"><button name="home" title="BACK TO LOANS LIST" >LOANS</button></a>
+</body>
+{%endblock%}

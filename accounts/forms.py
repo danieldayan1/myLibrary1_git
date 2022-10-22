@@ -249,11 +249,11 @@ class ProfileForm(forms.ModelForm):
     country = forms.ChoiceField(choices=COUNTRIES)
 
     def save(self , myFile = " " , *args , **kwargs):
-        prev_url= Visitor.objects.get(first_name = self.cleaned_data['first_name']).url
+        prev_url= Visitor.objects.get(user = self.cleaned_data['user']).url
         super(ProfileForm,self).save(*args , **kwargs)
         
         #update visitor url field
-        v = Visitor.objects.get(first_name = self.cleaned_data['first_name'])
+        v = Visitor.objects.get(user= self.cleaned_data['user'])
         if  len(myFile) >0 :
             v.url = myFile
         else: 
@@ -263,7 +263,6 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Visitor
         fields = '__all__' 
-        exclude = ['user' ]
         widgets={
             'age' : forms.NumberInput(attrs={'min': 18, 'max': 120, 'required': False, 'type': 'range'}), 
         }
