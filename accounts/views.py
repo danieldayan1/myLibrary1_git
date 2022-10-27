@@ -38,8 +38,11 @@ def register(request):
 
 def user_login(request):
 
+    if request.user.is_staff:
+        return redirect('Home_staff')
+
     if request.user.is_authenticated:
-        return redirect('Home')
+        return redirect('Home_visitors')
     
     if 'SignUp' in request.GET:
         return redirect('register')
@@ -47,10 +50,14 @@ def user_login(request):
         u_username = request.GET.get('username')
         u_password = request.GET.get('password')
         user = authenticate(username = u_username, password = u_password)
-
+      
         if user:
             login(request, user)
-            next = request.GET.get('next', 'Home')
+            if user.is_staff:
+                next_url = 'Home_staff'
+            else:
+                next_url = 'Home_visitors'
+            next = request.GET.get('next', next_url)
             return redirect(next)
         else:
             context = {'form': AuthenticationForm(request.GET)}

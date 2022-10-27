@@ -12,7 +12,7 @@ from .static import *
 
 
 
-def Home(request):
+def Home_visitors(request):
     context = {'message':'WELCOME TO LIBRARY SITE!!'}
     if request.method=='GET':
         myName = request.GET.get('myName')
@@ -22,14 +22,12 @@ def Home(request):
             context = {'message':f'HI {user.name} !! WELCOME TO LIBRARY SITE !!'}
         except:
             context = {'message':'WELCOME TO LIBRARY SITE!!'}
-    return render(request,'Home.html',context)
+    return render(request,'Home_visitors.html',context)
 
-
-    return render(request,'contact.html',{})
 
 @xframe_options_exempt
-def carusel(request):
-    return  render(request,'carusel.html',{})
+def carusel_visitors(request):
+    return  render(request,'carusel_visitors.html',{})
 
 @xframe_options_deny
 def view_one(request):
@@ -63,7 +61,7 @@ def books_search(request,l_books):
 
     return books
 
-def books(request):
+def books_visitors(request):
     errors = ''
     books = Book.objects.all()
     
@@ -72,14 +70,14 @@ def books(request):
         errors = request.session.get('errors')
         
     context = {'books':books , 'errors':errors}
-    return render(request,'books.html',context)
+    return render(request,'books_visitors.html',context)
 
 
-def loans(request):
+def loans_visitors(request):
     loans = Loan.objects.filter(customer = request.user.customer).order_by('-borrow_date')
     context = {'loans': loans}
 
-    return render(request,'loans.html',context)
+    return render(request,'loans_visitors.html',context)
 
 def return_loan(request,loan_id):
     try:
