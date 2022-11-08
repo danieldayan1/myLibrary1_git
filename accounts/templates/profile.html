@@ -1,3 +1,5 @@
+<h1><i><u>DETAILS</u></i></h1>
+
 {%for field in profile%}
     {%if 'Country' in field%}
         <p><b>Country: {{country_to_show}}</b></p>
@@ -13,5 +15,5 @@
         <a href="{%url 'Home_visitors'%}" style='padding : 10px'> HOME </a> 
     {%endif%}
     <a href="{%url 'update-profile'%}" style='padding : 10px'> UPDATE PROFILE </a> 
-    <a href = "{%url 'logout'%}" style='padding : 10px'>LOG-OUT</a></div>
+    <a href = "{%url 'logout'%}" style='padding : 10px' onclick="opener.close()">LOG-OUT</a></div>
 

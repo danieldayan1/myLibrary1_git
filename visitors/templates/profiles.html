@@ -1,0 +1,46 @@
+
+{%load static%}
+<html>
+    <head>
+        <link type="text/CSS" href="{%static 'css/css_profile.css'%}" rel="Stylesheet" />
+    </head>
+    <body>
+        <h1>{{header}}</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>DETAILS</th>
+                    {%if header == 'WORKERS'%}
+                        <th>STAFF</th>
+                    {%endif%}
+                </tr>
+            </thead>
+            <tbody>
+            {%for person in persons%}
+                <form method="post">
+                    {%csrf_token%}
+                    <tr>
+                        <td>
+                            <input type="hidden" name="person" value="{{person.id}}">
+                            <input type="submit" value = "DEL" name="del">
+                            {{forloop.counter}})   
+                        </td>
+                        <td>{{person}}</td>
+                        {%if header == 'WORKERS'%}
+                            {%if person.is_staff%}
+                                <td>V</td>
+                            {%else%}
+                                <td>X</td>
+                            {%endif%}
+                        {%endif%}
+                    </tr>
+            {%endfor%}
+            <tr>
+                <td colspan = 3><input type="submit" value = "ADD {{header}}" name="add"></td>
+            </tr>
+            </tbody>
+        </table>
+        </form>
+    </body>
+</html>

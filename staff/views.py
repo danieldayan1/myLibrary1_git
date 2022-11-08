@@ -1,28 +1,23 @@
 from django.shortcuts import redirect, render, get_object_or_404  , HttpResponse
-from django.urls import reverse  
 from django.views.decorators.clickjacking import xframe_options_exempt,xframe_options_deny
-from django.views.generic import ListView , DetailView
-from django.utils import timezone
 from datetime import *
-
 from  django.contrib.auth.models import User
 from  accounts.models import Visitor
 from  visitors.models import Book , Loan
-from  visitors.views import calc_free_books
+from  accounts.urls import register
+
+from .models import *
 from .forms import *
 from .templates import *
 from .static import *
 
 
-
 def Home_staff(request):
     context = {'message':'WELCOME TO LIBRARY SITE!!'}
     if request.method=='GET':
-        myName = request.GET.get('myName')
-        password = request.GET.get('password')
         try:
             user = request.user
-            context = {'message':f'HI {user.name} !! WELCOME TO LIBRARY SITE !!'}
+            context = {'message':f'HI {user} !! WELCOME TO LIBRARY SITE !!'}
         except:
             context = {'message':'WELCOME TO LIBRARY SITE!!'}
     return render(request,'Home_staff.html',context)
@@ -64,45 +59,55 @@ def books_search(request,l_books):
     return books
 
 def books_staff(request):
+
     errors = ''
     books = Book.objects.all()
-
-    if 'del' in request.POST:
-        book_id =  int(request.POST.get('book'))
-        book = Book.objects.get(identication = book_id)
-        free_books = calc_free_books()
-        if book in free_books:
-            book.delete()
-        else:
-            errors = "book already in loan !"
-
 
     if 'search' in request.GET:
         books = books_search(request,books)
         errors = request.session.get('errors')
     elif 'add' in request.GET:
         return redirect('add_book')
+    elif 'del' in request.GET:
+        book_id =  int(request.GET.get('book'))
+        book = get_object_or_404(Book,identication = book_id)
+        free_books = calc_free_books()
+        if book in free_books:
+            book.delete()
+        else:
+            errors = "book already in loan !"
  
     context = {'books':books , 'errors':errors}
     return render(request,'books_staff.html',context)
 
+def calc_free_books():
+
+    active_books = []
+    free_books = []
+
+    active_loans = Loan.objects.filter(return_date = None)
+    active_books = active_loans.values_list('books')
+    free_books = Book.objects.exclude(identication__in  = active_books)
+
+    return free_books
 
 def add_book(request):
-    form = BookForm()
+    
     errors = ""
+    form = BookForm()
 
     if request.method == 'POST':
         form = BookForm(request.POST)
         if form.is_valid():
             form.save()
-            location = 'books_staff'
-            respnose_cont ='<a href = "/staff/books_staff"> BOOK ADDED SUCCEFULY ! CLICK HERE TO RETURN TO BOOKS LIST.</a>'
+            respnose_cont ='<a href = "/visitors/books_staff"> BOOK ADDED SUCCEFULY ! CLICK HERE TO RETURN TO BOOKS LIST ...</a>'
             return HttpResponse(respnose_cont)
         else:
             errors = form.errors
         
     content = {'form':form,'errors':errors}
-    return render(request,'add_book.html',{'form':form})
+    return render(request,'add_book.html',content)
+
 
 def loans_staff(request):
     loans = Loan.objects.all().order_by('-borrow_date')
@@ -119,12 +124,11 @@ def profile_visitors(request):
     context = {'persons':persons , 'header':header}
 
     if 'del' in request.POST:
-       person_id = int(request.POST.get('person'))
-       visitor =  Visitor.objects.get(id = person_id)
-       visitor.delete()
+        person_id = int(request.POST.get('person'))
+        user = User.objects.get(id = person_id)
+        user.delete()
     elif 'add' in request.POST:
         return redirect('register')
-
 
     return  render(request,'profiles.html',context)
 
@@ -145,3 +149,7 @@ def profile_staff(request):
         return redirect('register')
 
     return  render(request,'profiles.html',context)
+
+
+
+

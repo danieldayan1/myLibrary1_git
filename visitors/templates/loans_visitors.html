@@ -15,12 +15,15 @@
     <div class="accordion-item">
         <h2 class="accordion-header" id={{heading}}>
           <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={{colapse1}} aria-expanded="true" aria-controls={{collapse}}>
-            Loan: {{loan.borrow_date}}
+            Loan: {{loan.borrow_date |date:'Y-m-d H:i'}}
           </button>
         </h2>
         <div id={{colapse}} class="accordion-collapse collapse " aria-labelledby={{heading}} data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            {{loan}} <a href="{%url 'return_loan' loan.id%}"><button style="float:right ; position:relative">RETURN</button></a>
+            {{loan}} 
+            {%if loan.return_date == None%}
+               <a href="{%url 'return_loan' loan.id%}"><button style="float:right ; position:relative">RETURN</button></a>
+            {%endif%}
           </div>
         </div>
       </div>

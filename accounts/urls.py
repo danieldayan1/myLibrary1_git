@@ -11,4 +11,5 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
     path('update-profile/', update_profile, name='update-profile'),
     path('profile/', profile, name='profile'),
+    path('', user_login, name=''),
 ]

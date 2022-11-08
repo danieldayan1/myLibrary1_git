@@ -9,4 +9,12 @@
         <button type = 'submit' name = "SignIn"> SignIN </button> <button type="sumbit" name="SignUp">SignUp ?</button>
     </form>
 
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+         <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
 {% endblock content%}

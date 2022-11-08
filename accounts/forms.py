@@ -1,6 +1,8 @@
 from django import forms
 from .models import Visitor 
 from django.utils.translation import gettext as _
+import os
+from django.db.models import Q
 
 class ProfileForm(forms.ModelForm):
 
@@ -245,30 +247,28 @@ class ProfileForm(forms.ModelForm):
         ('ZW', _('Zimbabwe')),
         ('ZZ', _('Unknown or unspecified country')),
     )    
-
     country = forms.ChoiceField(choices=COUNTRIES)
-
-    def save(self , myFile = " " , *args , **kwargs):
-        prev_url= Visitor.objects.get(user = self.cleaned_data['user']).url
-        super(ProfileForm,self).save(*args , **kwargs)
-        
-        #update visitor url field
-        v = Visitor.objects.get(user= self.cleaned_data['user'])
-        if  len(myFile) >0 :
-            v.url = myFile
-        else: 
-            v.url = prev_url
-        v.save()
 
     class Meta:
         model = Visitor
         fields = '__all__' 
+        exclude = ['slug_name']
         widgets={
             'age' : forms.NumberInput(attrs={'min': 18, 'max': 120, 'required': False, 'type': 'range'}), 
         }
         labels={
             'creation_date' : 'created at'
         }
+
+    def clean(self): 
+        cleaned_data=super(ProfileForm, self).clean()
+
+        url = self.data['url']
+
+        if len(url)>0 and not(os.path.exists(url)):
+            raise forms.ValidationError("url not exists!")
+        else:
+            return cleaned_data
 
 
 

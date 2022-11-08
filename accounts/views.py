@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect , get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate, login, logout
@@ -15,23 +15,19 @@ def register(request):
     if request.method == 'POST':
         
         form_filled = UserCreationForm(request.POST)
-
         if form_filled.is_valid():
             form_filled.save()
            
             u_username = form_filled.cleaned_data['username']
             u_password = form_filled.cleaned_data['password1']
-
             user = authenticate(username = u_username, password = u_password)
 
             if user :
                 login(request, user)
                 return redirect('update-profile')
             else:
-                print("User not authenticated")
-        
+                messages.add_message(request, messages.WARNING, "User not authenticated!")
         else:
-
             return render(request, 'register.html', {'form': form_filled})
 
     return render(request, 'register.html', context)
@@ -39,9 +35,10 @@ def register(request):
 def user_login(request):
 
     if request.user.is_staff:
+        #homepage for staff
         return redirect('Home_staff')
-
-    if request.user.is_authenticated:
+    elif request.user.is_authenticated:
+        #homepage for visitor
         return redirect('Home_visitors')
     
     if 'SignUp' in request.GET:
@@ -60,7 +57,8 @@ def user_login(request):
             next = request.GET.get('next', next_url)
             return redirect(next)
         else:
-            context = {'form': AuthenticationForm(request.GET)}
+            form = AuthenticationForm(request.GET)
+            context = {'form': form}
             messages.add_message(request, messages.WARNING, "User not authenticated!")
             return render(request, 'login.html', context)
 
@@ -75,21 +73,24 @@ def user_logout(request):
 def update_profile(request):
 
     profile = request.user.customer
-
     form = ProfileForm(request.POST  or None, instance=profile)
     context = {'form': form}
 
-    if form.is_valid():
-        myFile = request.POST.get('myFile')
-        form.save(myFile)
+    if 'back' in request.POST:
+        return redirect('profile')
+    elif form.is_valid():
+        form.save()
         return redirect('profile')
     else:
-        return render(request, 'update_profile.html', context)
+        context['errors'] = form.errors
+
+    return render(request, 'update_profile.html', context)
 
 @login_required(login_url='login')
 def profile(request):
 
     COUNTRIES = (
+        (None, _('None')),
         ('AD', _('Andorra')),
         ('AE', _('United Arab Emirates')),
         ('AF', _('Afghanistan')),
@@ -333,11 +334,9 @@ def profile(request):
 
     if request.user.is_staff:
         return redirect('admin:index')
-
-    visitor = Visitor.objects.get(user=request.user)
+    
+    visitor = get_object_or_404(Visitor,user=request.user)
     context={'profile': str(visitor).split(',')}
-
-    country = visitor.__dict__['country']
-    context['country_to_show'] = dict(COUNTRIES)[country]
+    context['country_to_show'] = dict(COUNTRIES)[visitor.country]
     
     return render(request, 'profile.html', context)
