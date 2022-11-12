@@ -1,0 +1,32 @@
+body{
+    background-color:ghostwhite ;
+    text-align: center;
+}
+table{
+    border: 1px solid black;
+    position: relative;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+thead th:first-child {
+    width: 100px;
+}
+thead th:nth-child(2) {
+    width: 200px;
+}
+thead tr {
+    background-color: #00CCFF;
+}
+tbody tr:nth-of-type(even) {
+    background-color: Silver;
+}
+tbody tr:nth-of-type(2n+1){
+    background-color: aquamarine;
+}
+tbody td:nth-child(-n+3) {
+    text-align: center;
+}
+tbody tr:nth-last-child(-n+2) {
+    font-style: italic;
+}

@@ -1,0 +1,51 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<style type="text/css">
+			body{
+				background-color:#F0FFFF
+			}
+			input:focus{
+				background-color: gray;
+			}
+			input[type="password"]:focus{
+				background-color: rgb(151, 113, 113);
+			}
+		</style>
+		<meta name = "description" content = "daniel dayan website . include all of my resume and cv during the years . ">
+		<meta name= "keywords" content = "daniel", "dayan" , "python" , "html" , "cv" , "fs">
+		<meta http-equiv=”refresh” content="120">
+		<meta charset="utf-8" >
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script src = "{%static 'js/js_form.js'%}" defer></script>
+	</head>
+    <body onload="timeToReset()">
+        <h1> Profile </h1>
+        <form method = 'post' style="display:inline ;">
+            {% csrf_token %}
+            {% for field in form %}
+                {%if field.name == 'age' %}
+                    {{field.name|capfirst}}:18 {{field}} 120 
+                    {%if field.value%}
+                        <span style = "padding: 20px;"><b>{{field.value}}</b>{{field.errors}}</span> 
+                    {%endif%}
+                    <br><br>
+                {%elif field.name == 'creation_date' %}
+                    Created At: {{field.value|date:"d/m/Y"}}  <br><br>
+                {%elif field.name == 'url' %}
+                    Attachment: {{field}} {{field.value}} {{field.errors}}<br><br>  
+                {%else%}
+                    {{field.name|capfirst}}: {{field}} {{field.errors}} <br><br>
+                {%endif%}
+            {%endfor%}	
+            <button name="back">BACK</button> <button type ="submit" name="submit"> SUMBIT </button>
+        </form>
+            <br><br>
+            {%if errors%}
+                WRONG FIELDS :
+                {{ form.non_field_errors }}
+                <br>
+            {%endif%}
+    </body>
+</html> 

@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Danie Dayan Website</title>
+		<meta name = "description" content = "daniel dayan website . include all of my resume and cv during the years . ">
+		<meta name= "keywords" content = "daniel", "dayan" , "python" , "html" , "cv" , "fs">
+		<meta http-equiv=”refresh” content="120">
+		<meta charset="utf-8" >
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" 
+         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+         <style>
+		    	.bg-carusel{
+                min-height: 750px;
+                background-size: cover;
+                background-position: center;
+            }
+            #bg-carusel1{
+              background-image: url("{%static 'pictures/PIC1.jfif'%}");
+            }
+            #bg-carusel2{
+              background-image: url("{%static 'pictures/PIC2.jfif'%}");
+            }
+            #bg-carusel3{
+              background-image: url("{%static 'pictures/PIC3.jfif'%}");
+            }
+	      	</style>
+  </head>
+        <body>
+            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" aria-label="Slide 1" aria-current="true"   class="active"></button>
+                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <div class = "bg-carusel" id = "bg-carusel1" ></div>
+                    <div class="carousel-caption d-none d-md-block" >
+                      <a href="{%url 'books'%}" target="_blank">
+                        <h5>BOOKS</h5>
+                        <p>Library full books list </p>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <div class = "bg-carusel" id = "bg-carusel2" ></div>
+                    <div class="carousel-caption d-none d-md-block">
+                      <a href="{%url 'loans'%}" target="_blank">
+                        <h5>LOANS</h5>
+                        <p>Your loans list</p>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="carousel-item">
+                    <div class = "bg-carusel" id = "bg-carusel3"></div>
+                    <div class="carousel-caption d-none d-md-block">
+                      <a href="{%url 'profile'%}" target="_blank">
+                        <h5>PROFILE</h5>
+                        <p>Your frofile.</p>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    </body>
+</html>

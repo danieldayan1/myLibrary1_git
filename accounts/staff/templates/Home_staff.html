@@ -1,0 +1,151 @@
+{%extends 'partials/base.html'%}
+{%load static%}
+{%block content%}
+<head>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" 
+	integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+	<link type="text/CSS" href="{%static 'css/css_home.css'%}" rel="Stylesheet" />
+	<style>
+	.profile{
+		display: inline-block; 
+		padding:5px;
+		margin:0px;
+		z-index: 1;
+		
+	}
+	#profiles{
+		visibility:hidden;
+		position:relative;
+		/* left: 1000px; */
+		z-index: 1;
+	}
+	</style>
+	<script>
+		window.status = "Welcome to my site!";
+
+		var profile_visible = "hidden"
+		var state;
+		var prevUrl;
+		var openWindow;
+
+		function show_profile(){
+			if(profile_visible == "hidden"){
+				profile_visible = "visible"
+			}else{
+				profile_visible = "hidden"
+			}
+			document.getElementById('profiles').style.visibility = profile_visible
+		}
+
+		function openClosePage(url_code,target){
+			if(url_code == 3){
+				url = "{%url 'profile'%}"
+			}else{
+				switch(url_code){
+				case 1: url = "{%url 'books_staff'%}";break; 
+				case 2: url = "{%url 'loans_staff'%}";break; 
+				case 4: url = "{%url 'profile_visitors' %}";break; 
+				case 5: url = "{%url 'profile_staff' %}";break; 
+				default: url = "{%url 'carusel_staff'%}";break;
+				}
+			}
+			frame = document.getElementById(target);
+			if(state == 1 && prevUrl==url){
+				// close new window
+				if(target=='_blank'){
+					openWindow.close(url);
+				}else{
+					frame.src = "{%url 'carusel_staff'%}";
+				}
+				state = 0;
+				prevUrl=" "
+			}
+			else{
+				//open new window
+				if(target=='_blank'){
+					openWindow = window.open(url,target);
+				}else{
+					frame.src = url;
+				}
+				state = 1;
+				prevUrl=url;
+			}
+		}
+
+		var myInterval;
+		var currentImage = 0
+		var animationStarted = false;
+		var arr = new Array();
+		function PreloadImages(){
+			var pic = new Image();
+			arr[0] = "{%static 'pictures/PIC4.jfif'%}";
+			arr[1] = "{%static 'pictures/PIC3.jfif'%}";
+			arr[2] = "{%static 'pictures/PIC2.jfif'%}";
+			arr[3] = "{%static 'pictures/PIC1.jfif'%}";
+			for (var i=0; i < 4; i++){
+				pic.src = arr[i];
+			}
+			ChangeImage()
+			StartAnimation();
+		}
+		function ChangeImage(){
+			let img =   "url(" + arr[currentImage] + ")"
+			document.getElementById("header").style.backgroundImage =  img; 
+			document.getElementById("header").style.backgroundRepeat = "no-repeat" ; 
+			document.getElementById("header").style.backgroundSize = " 100% 100%" ;
+	
+			if (currentImage >= 3){
+				currentImage = 0;
+			}else{
+				currentImage =  currentImage + 1;
+			}
+		}
+		function StartAnimation(){
+			if (animationStarted == false){
+				myInterval = setInterval("ChangeImage()", 2000)
+				animationStarted = true;
+			}
+		}
+	</script>
+</head>
+<body onload= "PreloadImages()">
+	<header>
+		<div id = "header">
+		<hgroup>
+			<h1 class = "center">
+				<a href = "{%url 'Home_staff'%}" title = "Librarian" >{{message}}</a>
+			</h1>
+		</hgroup>
+		<br>
+		<marquee>WELCOME TO LIBRARY SITE !!</marquee>
+		</div>
+	</header>
+	<hr style = "margin: 0px;">
+	<div  class = "center" >	
+		<nav style = "margin: 8px;">	
+			<ul>
+				<li title="press to open\close books list" onclick="openClosePage(1,'_blank')">BOOKS</li>
+				<li class="nav-item dropdown" >
+					<a  onclick = "show_profile()" style="display: inline;" class="nav-link dropdown-toggle"  id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						PROFILE
+					</a>
+				</li>
+				<li	title="press to open\close your loans" onclick="openClosePage(2,'_blank')">LOANS</li>
+			</ul>
+		</nav>
+
+	</div>
+	<div >
+		<iframe id = "main_show" name = "main_show" src= "{%url 'carusel_staff'%}" scrolling="no"></iframe>  
+	</div> 			
+	<div  id="profiles"  class = "center" >
+		<ul >
+			<li  class="profile" title="press to open\close your profile" onclick="openClosePage(3,'_blank')">personal</li><br>
+			<li  class="profile" title="press to open\close visitors profile" onclick="openClosePage(4,'_blank')">visitors</li><br>
+			<li  class="profile" title="press to open\close staff profile" onclick="openClosePage(5,'_blank')">staff</li><br>
+		</ul>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+</body>
+{%endblock%}
