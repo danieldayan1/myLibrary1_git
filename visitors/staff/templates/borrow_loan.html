@@ -1,0 +1,42 @@
+{%extends 'partials/base.html'%}
+{%load static%}
+{%block content%}
+<head>
+    <script src="{%static 'js/js_books.js'%}" defer></script>
+
+    <link rel="stylesheet" href="{%static 'css/css_books.css'%}">
+</head>
+<body>
+    <br>
+    <form method="get">
+        ID: <input type = "text" name="identication"> NAME:<input type = "text" name="name"> AUTHOR:<input type = "text" name="author">
+       PUBLISHED YEAR:<input type = "text" name="published_year"> TYPE:<input type = "text" name="book_type">
+       <br><br>
+       {% if errors%}
+         {{errors}} 
+       {%endif%}
+       <button name="search">SEARCH</button> 
+       <button name="reset">RESET</button>
+      </form>
+
+    
+    <form method="post">
+      {%csrf_token%}
+      <hr/>
+        <h1>CHOOSE USER</h1>
+          {{form.user}}
+      <hr/>
+      <h1>CHOOSE BOOKS</h1>
+      <br><br><br>
+        <select name="book" class="custom-select" multiple>
+        {%for book in books%}    
+          <option name = "{{book}}" id  = "{{book.name}}" value="{{book.identication}}">{{book}}</option>
+        {%endfor%}
+        </select>
+        <br>
+        <button name="back" style="float: left;" title="back">BACK</button>
+        <button type="submit" name="continue" style="float: right;" title="continue">NEXT</button>
+    </form>
+
+</body> 
+{%endblock%}

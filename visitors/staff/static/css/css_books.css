@@ -1,0 +1,66 @@
+body {
+	font-size: 12px;
+	font-family: sans-serif;
+	background: #2c3e50;
+}
+h1 {
+	text-align: center;
+	margin: 40px 0 40px;
+	text-align: center;
+	font-size: 30px;
+	color: #ecf0f1;
+	text-shadow: 2px 2px 4px #000000;
+	font-family: 'Cherry Swash', cursive;
+}
+
+p {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    color: #ecf0f1;
+    font-family: 'Cherry Swash',cursive;
+    font-size: 16px;
+}
+
+span {
+    color: #2BD6B4;
+}
+
+
+*{box-sizing: border-box; -webkit-box-sizing: border-box; }
+html, body { height: 100%; }
+body { margin: 0; font: 15px/1.3 sans-serif; }
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:600);
+
+body { 
+  font-family: 'Open Sans', 'sans-serif';
+  color: #cecece;
+  background: rgb(168, 163, 163);
+  text-align: center;
+}
+
+
+.select {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    max-width: 2000px;
+    gap: 20px;
+    margin-left: 650px;
+    position: relative;
+}
+
+.select__item {
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 3px;
+    background: #19998a;
+    transition: background 0.1s;
+}
+
+.select__item--selected {
+    background: #56ace5;
+    color: aliceblue;
+}
