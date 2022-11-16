@@ -14,6 +14,6 @@ urlpatterns = [
     path('profile_visitors/', profile_visitors , name = 'profile_visitors'),
     path('profile_staff/', profile_staff , name = 'profile_staff'),
     path('add_book/', add_book , name = 'add_book'),
-    
+    path('edit_book/<str:book_id>', edit_book , name = 'edit_book'),
 ]
 

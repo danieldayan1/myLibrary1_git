@@ -1,0 +1,11 @@
+<h1>BOOK DATAILS:</h1>
+<form method="post">
+    {%csrf_token%}
+    <label>NAME: </label><input type="text" size = "50" name = 'name' value="{{book.name}}" required="required"></input><br><br>
+    <label>AUTHOR: </label><input type="text"  size = "50" name = 'author' value="{{book.author}}" required="required"></input><br><br>
+    <label>PUBLICATION YEAR: </label><input type="number" name = 'published_year' value="{{book.published_year}}" required="required"></input><br><br>
+    <label>TYPE: </label>1<input type="range" min=1 max=3 name = 'book_type' value="{{book.book_type}}" required="required"></input>3
+    <br><br><br>
+<button type="submit">CHANGE</button><br>
+{{errors}}
+</form>

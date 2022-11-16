@@ -36,6 +36,7 @@ def view_one(request):
     return HttpResponse("<h1>Can't display in this version!</h1>")
 
 
+
 #########Books#########
 def books_search(request,l_books):
     
@@ -73,17 +74,39 @@ def books_staff(request):
         errors = request.session.get('errors')
     elif 'add' in request.GET:
         return redirect('add_book')
-    elif 'del' in request.GET:
-        book_id =  int(request.GET.get('book'))
-        book = get_object_or_404(Book,identication = book_id)
-        free_books = calc_free_books()
-        if book in free_books:
-            book.delete()
-        else:
-            errors = "book already in loan !"
+    else:
+        book_id =  request.GET.get('book')
+        if 'del' in request.GET:
+            book = get_object_or_404(Book,identication = book_id)
+            free_books = calc_free_books()
+            if book in free_books:
+                book.delete()
+            else:
+                errors = "book already in loan !"
+        elif 'edit' in request.GET:
+            request.session['book_id'] = book_id
+            return redirect('edit_book', book_id = book_id)
  
     context = {'books':books , 'errors':errors}
     return render(request,'books_staff.html',context)
+
+def edit_book(request,book_id):
+
+    book = get_object_or_404(Book,identication = book_id)
+    errors = " "
+    if request.method == 'POST':
+        try:
+            book.name = request.POST.get('name')
+            book.author = request.POST.get('author')
+            book.published_year = request.POST.get('published_year')
+            book.book_type = request.POST.get('book_type')
+            book.save()
+            respnose_cont ='<a href = "/staff/books_staff"> BOOK CHANGED SUCCEFULY ! CLICK HERE TO RETURN TO BOOKS LIST ...</a>'
+            return HttpResponse(respnose_cont)
+        except:
+            errors = "some errors accured . try again !"
+
+    return render(request , 'edit_book.html' , {'book':book , 'errors':errors})
 
 def calc_free_books():
 
@@ -113,6 +136,9 @@ def add_book(request):
         
     content = {'form':form,'errors':errors}
     return render(request,'add_book.html',content)
+
+
+    Model= Book
 
 
 
@@ -231,7 +257,5 @@ def profile_staff(request):
         return redirect('register')
 
     return  render(request,'profiles.html',context)
-
-
 
 

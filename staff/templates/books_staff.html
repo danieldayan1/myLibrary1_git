@@ -16,7 +16,7 @@
        <form >
         {%csrf_token%}
         <input type="hidden" name="book" value = "{{book.identication}}">
-        <button name = 'del'>DEL</button> {{forloop.counter}})    {{book}}<br><br>
+        <button name = 'del'>DEL</button> <button name = 'edit'>EDIT</button> {{forloop.counter}})    {{book}}<br><br>
       </form>
     {%endfor%}
 {%endblock%}

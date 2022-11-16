@@ -12,6 +12,7 @@ class BookForm(forms.ModelForm):
         self.fields['author'].required = True
         self.fields['published_year'].required = True
         self.fields['book_type'].required = True
+       
 
     class Meta:
         model = Book
