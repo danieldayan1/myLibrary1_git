@@ -259,3 +259,6 @@ def profile_staff(request):
     return  render(request,'profiles.html',context)
 
 
+########Instructions#########
+def instructions_staff(request):
+    return render(request,'instructions_staff.html',{})

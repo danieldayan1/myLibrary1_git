@@ -8,5 +8,6 @@ urlpatterns = [
     path('carusel_visitors/', carusel_visitors , name = 'carusel_visitors') ,
     path('books_visitors/', books_visitors , name = 'books_visitors') ,
     path('loans_visitors/', loans_visitors , name = 'loans_visitors') ,
+    path('instructions_visitors/', instructions_visitors , name = 'instructions_visitors') ,
 ]
 

@@ -292,5 +292,7 @@ def post_profile_group(sender, instance, created, *args, **kwargs):
         if not instance.is_staff :
             v = Visitor.objects.create(user_id = instance.id)
             Group.objects.get(name='Visitors').user_set.add(instance)
+        else:
+            Group.objects.get(name='Staff').user_set.add(instance)
 post_save.connect(receiver=post_profile_group, sender=User)
 

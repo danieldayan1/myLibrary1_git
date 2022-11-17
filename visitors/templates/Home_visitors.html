@@ -16,6 +16,7 @@
 				switch(url_code){
 				case 1: url = "{%url 'books_visitors'%}";break; 
 				case 2: url = "{%url 'loans_visitors'%}";break; 
+				case 4: url = "{%url 'instructions_visitors'%}";break
 				default: url = "{%url 'carusel_visitors'%}";break;
 				}
 			}
@@ -97,6 +98,7 @@
 				<li title="press to open\close books list" onclick="openClosePage(1,'_blank')">BOOKS</li>
 				<li	title="press to open\close your loans" onclick="openClosePage(2,'_blank')">LOANS</li>
 				<li	title="press to open\close your profile" onclick="openClosePage(3,'_blank')">PROFILE</li>
+				<li	title="press to open\close details" onclick="openClosePage(4,'_blank')">INSTRUCTIONS</li>
 		</nav>
 	</div>
 	<div>

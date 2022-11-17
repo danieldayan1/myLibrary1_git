@@ -46,6 +46,7 @@
 				case 2: url = "{%url 'loans_staff'%}";break; 
 				case 4: url = "{%url 'profile_visitors' %}";break; 
 				case 5: url = "{%url 'profile_staff' %}";break; 
+				case 6: url = "{%url 'instructions_staff'%}";break
 				default: url = "{%url 'carusel_staff'%}";break;
 				}
 			}
@@ -125,12 +126,13 @@
 		<nav style = "margin: 8px;">	
 			<ul>
 				<li title="press to open\close books list" onclick="openClosePage(1,'_blank')">BOOKS</li>
+				<li	title="press to open\close your loans" onclick="openClosePage(2,'_blank')">LOANS</li>
 				<li class="nav-item dropdown" >
 					<a  onclick = "show_profile()" style="display: inline;" class="nav-link dropdown-toggle"  id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						PROFILE
 					</a>
 				</li>
-				<li	title="press to open\close your loans" onclick="openClosePage(2,'_blank')">LOANS</li>
+				<li	title="press to open\close details" onclick="openClosePage(6,'_blank')">INSTRUCTIONS</li>
 			</ul>
 		</nav>
 

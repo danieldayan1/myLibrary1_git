@@ -83,3 +83,6 @@ def loans_visitors(request):
     return render(request,'loans_visitors.html',context)
 
 
+########Instructions#########
+def instructions_visitors(request):
+    return render(request,'instructions_visitors.html',{})

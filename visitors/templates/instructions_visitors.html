@@ -1,0 +1,63 @@
+{%extends 'partials/base.html'%}
+{%load static%}
+{%block content%}
+ <body style="background-color:rgb(55, 129, 202)">
+    <div>
+        <fieldset><legend><h1>BOOKS</h1></legend><br>
+        <ol>
+            <li>
+               Staff user can see library full books list .
+            </li>
+            <li>
+                Visitor user can only see library full books list with no manipulets .
+            </li>
+            <li>
+                Only staff user can make manipulets on all books in library (add , edit or delete). 
+            </li>
+        </ol>
+        </fieldset>
+    </div>
+    <div>
+        <fieldset><legend><h1>LOANS</h1></legend><br>
+        <ol>
+            <li>
+                Staff user can see library full books list .
+            </li>
+            <li>
+                Staff user can see library full loans list of all visitors .  
+            </li>
+            <li>
+                Only staff user allowed to make loan for visitor.
+                In this case , return date calculate according book type : 
+                    <ul>
+                        <li>book type = 3 : loan must return in 10 days .</li>
+                        <li>book type = 2 : loan must return in 5 days .</li>
+                        <li>book type = 1 : loan must return in 2 days .</li>
+                    </ul>
+            </li>
+            <li>
+                Only staff user allowed to approve returning loan for visitor .
+            </li>
+        </ol>
+        </fieldset>
+    </div>
+    <div>
+        <fieldset><legend><h1>ACCOUNTS</h1></legend><br>
+        <ol>
+            <li>
+                Visitor and staff users can login and logout to the site throw the main page .   
+            </li>
+            <li>
+                Visitor user can see and manpiulate only his personal details . 
+            </li>
+            <li>
+                Staf user can see visitors + staff details list .
+            </li>
+            <li>
+                only Staff user can add another staff user .
+            </li>
+        </ol>
+        </fieldset>
+    </div>
+ </body>
+{%endblock%}
