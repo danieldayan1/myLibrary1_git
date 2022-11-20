@@ -47,9 +47,9 @@ def books_search(request,l_books):
     if request.GET.get("identication"):     
         books = books.filter(identication = request.GET.get("identication"))
     if request.GET.get("name"):
-        books = books.filter(nameֹ__icontains = request.GET.get("name"))
+        books = books.filter(name = request.GET.get("name"))
     if request.GET.get("author"):
-        books = books.filter(authorֹ__icontains = request.GET.get("author"))
+        books = books.filter(author = request.GET.get("author"))
     if request.GET.get("published_year"):
         books = books.filter(published_year = int(request.GET.get("published_year")))
     if request.GET.get("book_type"):
